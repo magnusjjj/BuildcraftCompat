@@ -27,6 +27,19 @@ repositories {
     maven {
         url "http://dvs1.progwml6.com/files/maven"
     }
+//	maven {
+//		name = "buildcraft"
+//		url = "http://mod-buildcraft.com"
+//	}
+//	ivy {
+//		name "BuildCraft"
+//		artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision]-[classifier].[ext]"
+//	}
+	
+	ivy {
+        name "MineTweaker3"
+        artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
+    }
 }
 
 apply plugin: "net.minecraftforge.gradle.forge" // adds the forge dependency
@@ -48,7 +61,10 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.8.9:2.28.9.176" // Versions from http://minecraft.curseforge.com/projects/just-enough-items-jei/files
+    compile "mezz.jei:jei_1.8.9:2.28.9.176" // Versions from http://minecraft.curseforge.com/projects/just-enough-items-jei/files
+	//compile name: 'buildcraft', version: config.version.buildcraft, classifier: "dev", ext: 'jar'
+	compile name: 'MineTweaker3', version: config.version.minetweaker, ext: 'jar'
+	//compile name: 'buildcraft'
 }
 
 minecraft {
@@ -75,28 +91,14 @@ sourceSets {
     main {
         java {
             srcDir "common"
+			srcDir "BuildCraft/common"
+			srcDir "BuildCraft/BuildCraftAPI/api"
+			srcDir "api"
         }
         resources {
             srcDir "resources"
-        }
-    }
-    bc_core {
-        java {
-            srcDir "BuildCraft/common"
-        }
-        resources {
-            srcDir "BuildCraft/buildcraft_resources"
+			srcDir "BuildCraft/buildcraft_resources"
             srcDir "BuildCraft/BuildCraft-Localization"
-        }
-    }
-    bc_api {
-        java {
-            srcDir "BuildCraft/BuildCraftAPI/api"
-        }
-    }
-    api {
-        java {
-            srcDir "api"
         }
     }
 }
@@ -116,4 +118,3 @@ processResources {
         exclude 'mcmod.info'
     }
 }
-
